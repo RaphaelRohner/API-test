@@ -50,13 +50,17 @@ function writeToDocument(url) {
             var dataRow = [];
             
             Object.keys(item).forEach(function(key) {
-                var rowData = item[key].toString();
-                var truncatedData = rowData.substring(0, 15);
-                dataRow.push(`<td>${truncatedData}</td>`);
+                if (item[key] === null) {
+                    dataRow.push(`<td>n/a</td>`);
+                } else {
+                    var rowData = item[key].toString();
+                    var truncatedData = rowData.substring(0, 15);
+                    dataRow.push(`<td>${truncatedData}</td>`);
+                }                
             })
             tableRows.push(`<tr>${dataRow}</tr>`);  
         });
         
-        el.innerHTML = `<table>${tableHeaders}${tableRows}</table>${pagination}`;
+        el.innerHTML = `<table>${tableHeaders}${tableRows}</table>${pagination}`.replace(/,/g,"");
     });
 }
